@@ -5,7 +5,7 @@ A full-featured CRUD application built for managing your personal wishes. This p
 ## Live DEMO
 
 Experience the live website:
-<a href="https://viktoriapitsan.github.io/wishlist-app/" target="_blank">
+<a href="https://viktoriiapitsan.github.io/wishlist-app/" target="_blank">
 🌍 Live Demo
 </a>
 

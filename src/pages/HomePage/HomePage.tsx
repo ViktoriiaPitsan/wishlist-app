@@ -83,13 +83,9 @@ export const HomePage = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-        <div className="flex items-center gap-3 mb-6">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight m-0">
-            My Wishlist
-          </h1>
-
-          <img src="/favicon.png" alt="" className="w-8 h-8" />
-        </div>
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight m-0">
+          My Wishlist
+        </h1>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
