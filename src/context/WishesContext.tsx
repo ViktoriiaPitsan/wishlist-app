@@ -1,10 +1,16 @@
-import { createContext, useContext, useState, type ReactNode, useCallback } from 'react';
-import type { Wish } from '../types/wish';
-import { useApi } from '../hooks/useApi';
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+  useCallback,
+} from "react";
+import type { Wish } from "../types/wish";
+import { useApi } from "../hooks/useApi";
 
-type NotifyType = 'success' | 'error';
-type SortBy = 'createdAt' | 'price';
-type Order = 'asc' | 'desc';
+type NotifyType = "success" | "error";
+type SortBy = "createdAt" | "price";
+type Order = "asc" | "desc";
 
 interface GetWishesParams {
   sort?: SortBy;
@@ -21,8 +27,11 @@ interface WishesContextType {
 
   getWishes: (params?: GetWishesParams) => Promise<number>;
 
-  addWish: (data: Omit<Wish, 'id' | 'createdAt'>) => Promise<void>;
-  updateWish: (id: string, data: Partial<Omit<Wish, 'id' | 'createdAt'>>) => Promise<void>;
+  addWish: (data: Omit<Wish, "id" | "createdAt">) => Promise<void>;
+  updateWish: (
+    id: string,
+    data: Partial<Omit<Wish, "id" | "createdAt">>
+  ) => Promise<void>;
   deleteWish: (id: string) => Promise<void>;
 }
 
@@ -30,7 +39,10 @@ const WishesContext = createContext<WishesContextType | undefined>(undefined);
 
 export const WishesProvider = ({ children }: { children: ReactNode }) => {
   const [wishes, setWishes] = useState<Wish[]>([]);
-  const [notification, setNotification] = useState<{ msg: string; type: NotifyType } | null>(null);
+  const [notification, setNotification] = useState<{
+    msg: string;
+    type: NotifyType;
+  } | null>(null);
   const { request, loading } = useApi();
 
   const showNotify = useCallback((msg: string, type: NotifyType) => {
@@ -41,8 +53,8 @@ export const WishesProvider = ({ children }: { children: ReactNode }) => {
   const getWishes = useCallback(
     async (params: GetWishesParams = {}) => {
       const {
-        sort = 'createdAt',
-        order = 'desc',
+        sort = "createdAt",
+        order = "desc",
         page = 1,
         limit = 4,
         append = false,
@@ -50,7 +62,7 @@ export const WishesProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         const data: Wish[] = await request(
-          `/wishes?_sort=${sort}&_order=${order}&_page=${page}&_limit=${limit}`,
+          `/wishes?_sort=${sort}&_order=${order}&_page=${page}&_limit=${limit}`
         );
 
         setWishes((prev) => {
@@ -63,18 +75,21 @@ export const WishesProvider = ({ children }: { children: ReactNode }) => {
 
         return data.length;
       } catch {
-        showNotify('Failed to fetch wishes', 'error');
+        showNotify("Failed to fetch wishes", "error");
         return 0;
       }
     },
-    [request, showNotify],
+    [request, showNotify]
   );
 
-  const addWish = async (newWish: Omit<Wish, 'id' | 'createdAt'>) => {
+  const addWish = async (newWish: Omit<Wish, "id" | "createdAt">) => {
     try {
-      const created: Wish = await request('/wishes', {
-        method: 'POST',
-        body: JSON.stringify({ ...newWish, createdAt: new Date().toISOString() }),
+      const created: Wish = await request("/wishes", {
+        method: "POST",
+        body: JSON.stringify({
+          ...newWish,
+          createdAt: new Date().toISOString(),
+        }),
       });
 
       setWishes((prev) => {
@@ -82,38 +97,51 @@ export const WishesProvider = ({ children }: { children: ReactNode }) => {
         return isDuplicate ? prev : [created, ...prev];
       });
 
-      showNotify('Wish added successfully!', 'success');
+      showNotify("Wish added successfully!", "success");
     } catch {
-      showNotify('Failed to add wish', 'error');
+      showNotify("Failed to add wish", "error");
     }
   };
 
-  const updateWish = async (id: string, data: Partial<Omit<Wish, 'id' | 'createdAt'>>) => {
+  const updateWish = async (
+    id: string,
+    data: Partial<Omit<Wish, "id" | "createdAt">>
+  ) => {
     try {
       const updated: Wish = await request(`/wishes/${id}`, {
-        method: 'PATCH',
+        method: "PATCH",
         body: JSON.stringify(data),
       });
 
       setWishes((prev) => prev.map((w) => (w.id === id ? updated : w)));
-      showNotify('Wish updated!', 'success');
+      showNotify("Wish updated!", "success");
     } catch {
-      showNotify('Update failed', 'error');
+      showNotify("Update failed", "error");
     }
   };
 
   const deleteWish = async (id: string) => {
     try {
-      await request(`/wishes/${id}`, { method: 'DELETE' });
+      await request(`/wishes/${id}`, { method: "DELETE" });
       setWishes((prev) => prev.filter((w) => w.id !== id));
-      showNotify('Wish deleted', 'success');
+      showNotify("Wish deleted", "success");
     } catch {
-      showNotify('Delete failed', 'error');
+      showNotify("Delete failed", "error");
     }
   };
 
   return (
-    <WishesContext.Provider value={{ wishes, loading, notification, getWishes, addWish, updateWish, deleteWish }}>
+    <WishesContext.Provider
+      value={{
+        wishes,
+        loading,
+        notification,
+        getWishes,
+        addWish,
+        updateWish,
+        deleteWish,
+      }}
+    >
       {children}
     </WishesContext.Provider>
   );
@@ -121,6 +149,6 @@ export const WishesProvider = ({ children }: { children: ReactNode }) => {
 
 export const useWishes = () => {
   const context = useContext(WishesContext);
-  if (!context) throw new Error('useWishes must be used within WishesProvider');
+  if (!context) throw new Error("useWishes must be used within WishesProvider");
   return context;
 };

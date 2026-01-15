@@ -38,7 +38,7 @@ export const WishPage = () => {
   const confirmDelete = async () => {
     await deleteWish(wish.id);
     setIsDeleteModalOpen(false);
-    navigate("/"); 
+    navigate("/");
   };
 
   return (

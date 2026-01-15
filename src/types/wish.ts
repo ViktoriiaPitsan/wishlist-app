@@ -7,6 +7,6 @@ export interface Wish {
   createdAt: string;
 }
 
-export type WishFormData = Omit<Wish, 'id' | 'createdAt'>;
+export type WishFormData = Omit<Wish, "id" | "createdAt">;
 
-export type SortOrder = 'newest' | 'oldest' | 'priceHigh' | 'priceLow';
+export type SortOrder = "newest" | "oldest" | "priceHigh" | "priceLow";

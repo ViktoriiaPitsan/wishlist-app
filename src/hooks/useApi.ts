@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -7,14 +7,14 @@ export const useApi = () => {
   const request = useCallback(async (url: string, options?: RequestInit) => {
     setLoading(true);
     setError(null);
-    
-    const baseUrl = 'http://localhost:3000'; 
+
+    const baseUrl = "http://localhost:3000";
 
     try {
       const response = await fetch(`${baseUrl}${url}`, {
         ...options,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...options?.headers,
         },
       });
@@ -25,7 +25,8 @@ export const useApi = () => {
 
       return await response.json();
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Something went wrong';
+      const message =
+        err instanceof Error ? err.message : "Something went wrong";
       setError(message);
       throw err;
     } finally {
