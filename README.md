@@ -5,7 +5,7 @@ A full-featured CRUD application built for managing your personal wishes. This p
 ## Live DEMO
 
 Experience the live website:
-<a href="https://ViktoriiaPitsan.github.io/article-filter-app/" target="_blank">
+<a href="https://viktoriapitsan.github.io/wishlist-app/" target="_blank">
 🌍 Live Demo
 </a>
 
@@ -30,7 +30,7 @@ Experience the live website:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/ViktoriiaPitsan/article-filter-app.git
+   git clone https://github.com/ViktoriiaPitsan/wishlist-app.git
    ```
 
 2. **Enter the directory**:

@@ -8,7 +8,7 @@ export const useApi = () => {
     setLoading(true);
     setError(null);
 
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "https://wishlist-api-2spn.onrender.com";
 
     try {
       const response = await fetch(`${baseUrl}${url}`, {
