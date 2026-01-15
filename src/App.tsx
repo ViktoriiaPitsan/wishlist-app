@@ -6,7 +6,7 @@ import { WishPage } from "./pages/WishPage/WishPage";
 function App() {
   return (
     <WishesProvider>
-      <Router>
+      <Router basename="/wishlist-app">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/wish/:id" element={<WishPage />} />
